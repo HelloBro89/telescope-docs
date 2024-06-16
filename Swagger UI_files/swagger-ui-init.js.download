@@ -43,7 +43,7 @@ window.onload = function() {
             {
               "name": "limit",
               "in": "query",
-              "description": "Maximum number of items",
+              "description": "Maximum number of items - 20, default - 20",
               "required": false,
               "type": "number",
               "example": 20
@@ -51,7 +51,7 @@ window.onload = function() {
             {
               "name": "offset",
               "in": "query",
-              "description": "Number of items to skip",
+              "description": "Number of items to skip, default - 0",
               "required": false,
               "type": "number",
               "example": 40
@@ -59,20 +59,22 @@ window.onload = function() {
             {
               "name": "sort",
               "in": "query",
-              "description": "Field to sort",
+              "description": "Field to sort, default - endTime",
               "required": false,
               "type": "string",
               "enum": [
                 "startTime",
                 "endTime",
-                "participantNumber"
+                "campaignName",
+                "participantNumber",
+                "sourceName"
               ],
               "example": "endTime"
             },
             {
               "name": "sortOrder",
               "in": "query",
-              "description": "Sorting order",
+              "description": "Sorting order, default - asc",
               "required": false,
               "type": "string",
               "enum": [
