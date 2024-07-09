@@ -1,0 +1,338 @@
+
+window.onload = function() {
+  // Build a system
+  var url = window.location.search.match(/url=([^&]+)/);
+  if (url && url.length > 1) {
+    url = decodeURIComponent(url[1]);
+  } else {
+    url = window.location.origin;
+  }
+  var options = {
+  "swaggerDoc": {
+    "info": {
+      "title": "Telescope API",
+      "version": "1.0.0"
+    },
+    "basePath": "/dev/",
+    "securityDefinitions": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "API authorization token",
+        "name": "Authorization",
+        "in": "header"
+      }
+    },
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "swagger": "2.0",
+    "paths": {
+      "/public/airdrops": {
+        "get": {
+          "tags": [
+            "public"
+          ],
+          "summary": "Get list of all drops",
+          "description": "Return a list of filtered airdrops",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "limit",
+              "in": "query",
+              "description": "Maximum number of items - 20, default - 20",
+              "required": false,
+              "type": "number",
+              "example": 20
+            },
+            {
+              "name": "offset",
+              "in": "query",
+              "description": "Number of items to skip, default - 0",
+              "required": false,
+              "type": "number",
+              "example": 40
+            },
+            {
+              "name": "sort",
+              "in": "query",
+              "description": "Field to sort, default - endTime",
+              "required": false,
+              "type": "string",
+              "enum": [
+                "startTime",
+                "endTime",
+                "campaignName",
+                "participantNumber",
+                "sourceName"
+              ],
+              "example": "endTime"
+            },
+            {
+              "name": "sortOrder",
+              "in": "query",
+              "description": "Sorting order, default - asc",
+              "required": false,
+              "type": "string",
+              "enum": [
+                "desc",
+                "asc"
+              ],
+              "example": "desc"
+            }
+          ],
+          "security": [
+            []
+          ],
+          "responses": {
+            "200": {
+              "description": "Array of airdrops",
+              "schema": {
+                "type": "object",
+                "required": [
+                  "status",
+                  "data"
+                ],
+                "properties": {
+                  "status": {
+                    "$ref": "#/definitions/ApiResponseOK"
+                  },
+                  "data": {
+                    "type": "object",
+                    "required": [
+                      "airdrops"
+                    ],
+                    "properties": {
+                      "airdrops": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/definitions/AirDrop"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Here will be description later!!!",
+              "schema": {
+                "$ref": "#/definitions/ApiResponseBadRequest"
+              }
+            }
+          }
+        }
+      },
+      "/public/airdrops/{airdrop_id}": {
+        "get": {
+          "tags": [
+            "public"
+          ],
+          "summary": "Get one AirDrop",
+          "description": "Return specific AirDrop by given id",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "application_referenceId",
+              "in": "path",
+              "description": "Application Reference ID",
+              "required": true,
+              "type": "string",
+              "example": "641a0e6295a9ada6271b0358"
+            }
+          ],
+          "security": [
+            []
+          ],
+          "responses": {
+            "200": {
+              "description": "Object with selected Airdrop data",
+              "schema": {
+                "type": "object",
+                "required": [
+                  "status",
+                  "data"
+                ],
+                "properties": {
+                  "status": {
+                    "$ref": "#/definitions/ApiResponseOK"
+                  },
+                  "data": {
+                    "type": "object",
+                    "required": [
+                      "airdrop"
+                    ],
+                    "properties": {
+                      "airdrop": {
+                        "$ref": "#/definitions/AirDrop"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Here will be description later!!!",
+              "schema": {
+                "$ref": "#/definitions/ApiResponseBadRequest"
+              }
+            },
+            "404": {
+              "description": "The requested data was not found",
+              "schema": {
+                "$ref": "#/definitions/ApiResponseNotFound"
+              }
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "ApiResponseOK": {
+        "type": "string",
+        "example": "success"
+      },
+      "ApiResponseNotFound": {
+        "type": "object",
+        "required": [
+          "status",
+          "data"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "fail"
+          },
+          "data": {
+            "type": "string",
+            "example": "Object not found"
+          }
+        }
+      },
+      "ApiResponseBadRequest": {
+        "type": "object",
+        "required": [
+          "status",
+          "message"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "fail"
+          }
+        }
+      },
+      "AirDrop": {
+        "type": "object",
+        "required": [
+          "id",
+          "campaignName",
+          "startTime",
+          "endTime",
+          "sourceName",
+          "participantNumber",
+          "url"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "GCX2QtwvHg"
+          },
+          "campaignName": {
+            "type": "string",
+            "example": "Micro3"
+          },
+          "url": {
+            "type": "string",
+            "example": "https://telescope.com"
+          },
+          "startTime": {
+            "type": "integer",
+            "format": "int64",
+            "description": "timestamp",
+            "example": 1706432400
+          },
+          "endTime": {
+            "type": "integer",
+            "format": "int64",
+            "description": "timestamp",
+            "example": 1707638400
+          },
+          "sourceName": {
+            "type": "string",
+            "example": "galxe.com"
+          },
+          "participantNumber": {
+            "type": "integer",
+            "example": 1260
+          },
+          "data": {
+            "type": "object",
+            "description": "Unknown structure",
+            "example": {}
+          }
+        }
+      }
+    },
+    "responses": {},
+    "parameters": {},
+    "tags": [
+      {
+        "name": "public",
+        "description": "Public endpoints(without token)"
+      }
+    ]
+  },
+  "customOptions": {}
+};
+  url = options.swaggerUrl || url
+  var urls = options.swaggerUrls
+  var customOptions = options.customOptions
+  var spec1 = options.swaggerDoc
+  var swaggerOptions = {
+    spec: spec1,
+    url: url,
+    urls: urls,
+    dom_id: '#swagger-ui',
+    deepLinking: true,
+    presets: [
+      SwaggerUIBundle.presets.apis,
+      SwaggerUIStandalonePreset
+    ],
+    plugins: [
+      SwaggerUIBundle.plugins.DownloadUrl
+    ],
+    layout: "StandaloneLayout"
+  }
+  for (var attrname in customOptions) {
+    swaggerOptions[attrname] = customOptions[attrname];
+  }
+  var ui = SwaggerUIBundle(swaggerOptions)
+
+  if (customOptions.oauth) {
+    ui.initOAuth(customOptions.oauth)
+  }
+
+  if (customOptions.preauthorizeApiKey) {
+    const key = customOptions.preauthorizeApiKey.authDefinitionKey;
+    const value = customOptions.preauthorizeApiKey.apiKeyValue;
+    if (!!key && !!value) {
+      const pid = setInterval(() => {
+        const authorized = ui.preauthorizeApiKey(key, value);
+        if(!!authorized) clearInterval(pid);
+      }, 500)
+
+    }
+  }
+
+  if (customOptions.authAction) {
+    ui.authActions.authorize(customOptions.authAction)
+  }
+
+  window.ui = ui
+}
