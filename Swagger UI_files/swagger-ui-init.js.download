@@ -138,9 +138,9 @@ window.onload = function() {
           ],
           "parameters": [
             {
-              "name": "application_referenceId",
+              "name": "airdrop_id",
               "in": "path",
-              "description": "Application Reference ID",
+              "description": "AirDrop ID",
               "required": true,
               "type": "string",
               "example": "641a0e6295a9ada6271b0358"
