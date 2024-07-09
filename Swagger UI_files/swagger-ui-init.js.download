@@ -241,7 +241,7 @@ window.onload = function() {
         "properties": {
           "id": {
             "type": "string",
-            "example": "GCX2QtwvHg"
+            "example": "641a0e6295a9ada6271b0358"
           },
           "campaignName": {
             "type": "string",
