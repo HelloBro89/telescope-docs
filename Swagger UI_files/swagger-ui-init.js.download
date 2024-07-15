@@ -63,11 +63,10 @@ window.onload = function() {
               "required": false,
               "type": "string",
               "enum": [
-                "startTime",
                 "endTime",
-                "campaignName",
-                "participantNumber",
-                "sourceName"
+                "name",
+                "participantsAmount",
+                "startTime"
               ],
               "example": "endTime"
             },
@@ -230,32 +229,37 @@ window.onload = function() {
       "AirDrop": {
         "type": "object",
         "required": [
+          "_id",
           "id",
-          "campaignName",
-          "startTime",
+          "chainId",
+          "description",
           "endTime",
-          "sourceName",
-          "participantNumber",
-          "url"
+          "item",
+          "name",
+          "participantsAmount",
+          "startTime",
+          "status",
+          "taskAmount",
+          "thumbnail"
         ],
         "properties": {
+          "_id": {
+            "type": "string",
+            "description": "MongoDB ObjectId",
+            "example": "66900cbcdcfeb53769b9e5a8"
+          },
           "id": {
             "type": "string",
-            "example": "641a0e6295a9ada6271b0358"
+            "example": 905250114373185500
           },
-          "campaignName": {
+          "chainId": {
             "type": "string",
-            "example": "Micro3"
+            "example": 137
           },
-          "url": {
+          "description": {
             "type": "string",
-            "example": "https://telescope.com"
-          },
-          "startTime": {
-            "type": "integer",
-            "format": "int64",
-            "description": "timestamp",
-            "example": 1706432400
+            "description": "json object",
+            "example": "{\"type\":\"DRAFT_JS_RAW\",\"data\":{\"blocks\":[{\"key\":\"5ngtu\",\"text\":\"The L1 powering Apps through DePin\",\"type\":\"unstyled\",\"depth\":0,\"inlineStyleRanges\":[],\"entityRanges\":[],\"data\":{}},{\"key\":\"ba7mg\",\"text\":\"\",\"type\":\"unstyled\",\"depth\":0,\"inlineStyleRanges\":[],\"entityRanges\":[],\"data\":{}},{\"key\":\"9lsfc\",\"text\":\"$KAI and you\",\"type\":\"unstyled\",\"depth\":0,\"inlineStyleRanges\":[],\"entityRanges\":[{\"offset\":0,\"length\":4,\"key\":0}],\"data\":{}},{\"key\":\"eok78\",\"text\":\"\",\"type\":\"unstyled\",\"depth\":0,\"inlineStyleRanges\":[],\"entityRanges\":[],\"data\":{}},{\"key\":\"b70ci\",\"text\":\"Let’s make supercomputing accessible and affordable\",\"type\":\"unstyled\",\"depth\":0,\"inlineStyleRanges\":[],\"entityRanges\":[],\"data\":{}}],\"entityMap\":{\"0\":{\"type\":\"LINK\",\"mutability\":\"MUTABLE\",\"data\":{\"href\":\"https://twitter.com/search?q=%24KAI&src=cashtag_click\",\"url\":\"https://twitter.com/search?q=%24KAI&src=cashtag_click\"}}}}}"
           },
           "endTime": {
             "type": "integer",
@@ -263,18 +267,36 @@ window.onload = function() {
             "description": "timestamp",
             "example": 1707638400
           },
-          "sourceName": {
-            "type": "string",
-            "example": "galxe.com"
-          },
-          "participantNumber": {
-            "type": "integer",
-            "example": 1260
-          },
-          "data": {
+          "item": {
             "type": "object",
             "description": "Unknown structure",
             "example": {}
+          },
+          "name": {
+            "type": "string",
+            "example": "Micro3"
+          },
+          "participantsAmount": {
+            "type": "integer",
+            "example": 1260
+          },
+          "startTime": {
+            "type": "integer",
+            "format": "int64",
+            "description": "timestamp",
+            "example": 1706432400
+          },
+          "status": {
+            "type": "integer",
+            "example": 300
+          },
+          "taskAmount": {
+            "type": "integer",
+            "example": 8
+          },
+          "thumbnail": {
+            "type": "string",
+            "example": "https://s3.ap-northeast-1.amazonaws.com/quest3.xyz/community/905249412708475321.jpg"
           }
         }
       }
